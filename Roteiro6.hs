@@ -60,13 +60,13 @@ lst12 = lst3++[0]++lst1
 
 --bubble
 
-troca [x] = [x]
+trocar [x] = [x]
 trocar (x:y:zs)
- | x > y = y : troca (x:zs)
+ | x > y = y : trocar (x:zs)
  | otherwise = x : trocar  (y:zs)
 
 bolhaOrd lista 0 = lista
-bolhaOrd lista n = bolhaOrd (troca lista) (n-1)
+bolhaOrd lista n = bolhaOrd (trocar lista) (n-1)
 
 bolha [] = []
 bolha lista = bolhaOrd lista (length lista)
@@ -102,9 +102,118 @@ insereOrd x (y:ys)
  | x <= y = (x:y:ys)
  | otherwise = y: (insereOrd x ys)
 
+--quicksort
+
 quicksort:: (Ord a) => [a] -> [a]
 quicksort [] = []
 quicksort (s:xs) = quicksort [x | x <- xs, x < s]
                    ++ [s] ++
                    quicksort [x | x <- xs, x >= s]
- 
+
+--11)
+
+--bubble
+
+trocar1 [x] = [x]
+trocar1 (x:y:zs)
+ | x > y = y : trocar1 (x:zs)
+ | otherwise = x : trocar1  (y:zs)
+
+bolhaOrd1 lista 0 = lista
+bolhaOrd1 lista n = bolhaOrd1 (trocar1 lista) (n-1)
+
+bolha1 [] = []
+bolha1 lista = bolhaOrd1 lista (length lista)
+
+--selection sort
+
+selecao1:: (Ord a) => [a] -> [a]
+selecao1 [] = []
+selecao1 xs = [x] ++ selecao1 (remove1 x xs)
+                      where x = minimo1 xs
+
+remove1:: (Ord a) => a -> [a] -> [a]
+remove1 a [] = []
+remove1 a (x:xs)
+ | a == x = xs
+ | otherwise = x:(remove1 a xs)
+
+minimo1:: (Ord a) => [a] ->a
+minimo1 [] = undefined
+minimo1 [x] = x
+minimo1 (x:xs)
+ | x <= (minimo1 xs) = x
+ | otherwise = minimo1 xs
+
+ --insertion sort
+
+insercao1:: Ord a => [a] -> [a]
+insercao1 = foldr insereOrd1 []
+
+insereOrd1:: (Ord a) => a -> [a] -> [a]
+insereOrd1 x [] = [x]
+insereOrd1 x (y:ys)
+ | x <= y = (x:y:ys)
+ | otherwise = y: (insereOrd1 x ys)
+
+--quicksort
+
+quicksort1:: (Ord a) => [a] -> [a]
+quicksort1 [] = []
+quicksort1 (s:xs) = quicksort1 [x | x <- xs, x < s]
+                   ++ [s] ++
+                   quicksort1 [x | x <- xs, x >= s]
+
+--12)
+
+--bubble
+
+trocar2 [x] = [x]
+trocar2 (x:y:zs)
+ | x <= y = y : trocar2 (x:zs)
+ | otherwise = x : trocar2  (y:zs)
+
+bolhaOrd2 lista 0 = lista
+bolhaOrd2 lista n = bolhaOrd2 (trocar2 lista) (n-1)
+
+bolha2 [] = []
+bolha2 lista = bolhaOrd2 lista (length lista)
+
+--selection sort
+
+selecao2:: (Ord a) => [a] -> [a]
+selecao2 [] = []
+selecao2 xs = [x] ++ selecao2 (remove2 x xs)
+                      where x = minimo2 xs
+
+remove2:: (Ord a) => a -> [a] -> [a]
+remove2 a [] = []
+remove2 a (x:xs)
+ | a == x = xs
+ | otherwise = x:(remove2 a xs)
+
+minimo2:: (Ord a) => [a] ->a
+minimo2 [] = undefined
+minimo2 [x] = x
+minimo2 (x:xs)
+ | x >= (minimo2 xs) = x
+ | otherwise = minimo2 xs
+
+ --insertion sort
+
+insercao2:: Ord a => [a] -> [a]
+insercao2 = foldr insereOrd2 []
+
+insereOrd2:: (Ord a) => a -> [a] -> [a]
+insereOrd2 x [] = [x]
+insereOrd2 x (y:ys)
+ | x >= y = (x:y:ys)
+ | otherwise = y: (insereOrd2 x ys)
+
+--quicksort
+
+quicksort2:: (Ord a) => [a] -> [a]
+quicksort2 [] = []
+quicksort2 (s:xs) = quicksort2 [x | x <- xs, x > s]
+                   ++ [s] ++
+                   quicksort2 [x | x <- xs, x <= s]
