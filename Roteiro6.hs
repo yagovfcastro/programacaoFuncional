@@ -125,6 +125,8 @@ bolhaOrd1 lista n = bolhaOrd1 (trocar1 lista) (n-1)
 bolha1 [] = []
 bolha1 lista = bolhaOrd1 lista (length lista)
 
+comparacoesBubble x = sum ( map snd ( bolha1 ( zip x (repeat 1))))
+
 --selection sort
 
 selecao1:: (Ord a) => [a] -> [a]
