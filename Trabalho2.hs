@@ -171,10 +171,14 @@ bolha3c lista = bolhaOrd3c (lista,0) (length lista)
 -- Podemos, claramente, perceber uma diferença no tempo de execução de cada um dos algoritmos, principalmente quando
 -- utilizamos uma lista grande, como, por exemplo, a l6.
 -- Organizando-os por tempo de execução (em ordem ascendente):
--- variação1
--- variação3
--- variação2
+-- variação 3
+-- variação 1
+-- variação 2
 -- original
+
+--A vencedora foi: variação 3
+-- A partir das avaliações, podemos concluir que, a variação 3 é a mais otimizada tanto em termos de tempo de execução
+-- quanto em termos de números de comparação.
 
 --4)
 
