@@ -127,7 +127,67 @@ quicksort1 (s:xs) = quicksort1 (fst m1) ++ [s] ++ quicksort1 (snd m1)
 --variação 2
 
 
-        
+
+--6)
+
+--a
+
+data Expr a = Val a |
+            Add (Expr a) (Expr a) |
+            Sub (Expr a) (Expr a) |
+            Mul (Expr a) (Expr a) |
+            Elv (Expr a) (Expr a)
+
+eval::(Integral a) => Expr a -> a
+eval (Val n) = n
+eval (Add e1 e2) = (eval e1) + (eval e2)
+eval (Sub e1 e2) = (eval e1) - (eval e2)
+eval (Mul e1 e2) = (eval e1) * (eval e2)
+eval (Elv e1 e2) = (eval e1) ^ (eval e2)
+
+--b
+
+--    (3+12)*(15-5)^(1*3)
+
+-- Essa operação pode ser dividida em 3 passos:
+-- (eval (Add (Val 3) (Val 12)))
+-- (eval (Sub (Val 15) (Val 5)))
+-- (eval (Mul (Val 1) (Val 3)))
+
+-- Resultando em:
+resultado:: (Integral a) => a
+resultado = eval (Mul (Val (eval (Add (Val 3) (Val 12)))) (Val (eval (Elv (Val (eval (Sub (Val 15) (Val 5)))) (Val (eval (Mul (Val 1) (Val 3)))))))) -- = 15000
+
+--   - ((6+8-5+1)*(2+6^2))
+
+-- Essa operação pode ser dividida em 3 passos:
+--(eval (Add (Val (eval (Sub (Val (eval (Add (Val 6) (Val 8)))) (Val 5)))) (Val 1)))
+--(eval (Add (Val 2) (Val (eval (Elv (Val 6) (Val 2))))))
+--(eval (Mul (Val (eval (Add (Val (eval (Sub (Val (eval (Add (Val 6) (Val 8)))) (Val 5)))) (Val 1)))) (Val (eval (Add (Val 2) (Val (eval (Elv (Val 6) (Val 2)))))))))
+
+resultado2:: (Integral a) => a
+resultado2 = eval (Sub (Val 0) (Val (eval (Mul (Val (eval (Add (Val (eval (Sub (Val (eval (Add (Val 6) (Val 8)))) (Val 5)))) (Val 1)))) (Val (eval (Add (Val 2) (Val (eval (Elv (Val 6) (Val 2)))))))))))
+
+--8)
 
 
 
+--10)
+
+data ArvBinEA a = Vazia |
+                  Folha a |
+                  NoEA (Char, ArvBinEA a, ArvBinEA a)
+                    deriving (Show)
+
+ea::ArvBinEA Float
+ea = (NoEA ('+', NoEA ('*', Folha 10, Folha 5), Folha 7))
+
+evalTree:: (Integral a) => ArvBinEA a -> a
+evalTree (Vazia) = 0 
+evalTree (Folha n) = n
+evalTree (NoEA (e1,e2,e3))
+ | e1 == '+' = (evalTree e2) + (evalTree e3)
+ | e1 == '-' = (evalTree e2) - (evalTree e3)
+ | e1 == '*' = (evalTree e2) * (evalTree e3)
+ | e1 == '^' = (evalTree e2) ^ (evalTree e3)
+ | otherwise = error "Operador Inválido!"
