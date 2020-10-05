@@ -175,7 +175,7 @@ bolha3c lista = bolhaOrd3c (lista,0) (length lista)
 -- variação 2
 -- original
 
---A vencedora foi: variação 3
+-- A vencedora foi: variação 3
 -- A partir das avaliações, podemos concluir que, a variação 3 é a mais otimizada tanto em termos de tempo de execução
 -- quanto em termos de números de comparação.
 
@@ -183,11 +183,11 @@ bolha3c lista = bolhaOrd3c (lista,0) (length lista)
 
 --quicksort original
 
-quicksort:: (Ord a) => [a] -> [a]
-quicksort [] = []
-quicksort (s:xs) = quicksort [x | x <- xs, x < s]
-                   ++ [s] ++
-                   quicksort [x | x <- xs, x >= s]
+quicksortOrg:: (Ord a) => [a] -> [a]
+quicksortOrg [] = []
+quicksortOrg (s:xs) = quicksortOrg [x | x <- xs, x < s]
+                      ++ [s] ++
+                      quicksortOrg [x | x <- xs, x >= s]
 
 --variação 1
 
@@ -337,7 +337,7 @@ eval (Elv e1 e2) = (eval e1) ^ (eval e2)
 
 --    (3+12)*(15-5)^(1*3)
 
--- Essa operação pode ser dividida em 3 passos:
+--Essa operação pode ser dividida em 3 passos:
 -- (eval (Add (Val 3) (Val 12)))
 -- (eval (Sub (Val 15) (Val 5)))
 -- (eval (Mul (Val 1) (Val 3)))
@@ -348,10 +348,10 @@ resultado = eval (Mul (Val (eval (Add (Val 3) (Val 12)))) (Val (eval (Elv (Val (
 
 --   - ((6+8-5+1)*(2+6^2))
 
--- Essa operação pode ser dividida em 3 passos:
---(eval (Add (Val (eval (Sub (Val (eval (Add (Val 6) (Val 8)))) (Val 5)))) (Val 1)))
---(eval (Add (Val 2) (Val (eval (Elv (Val 6) (Val 2))))))
---(eval (Mul (Val (eval (Add (Val (eval (Sub (Val (eval (Add (Val 6) (Val 8)))) (Val 5)))) (Val 1)))) (Val (eval (Add (Val 2) (Val (eval (Elv (Val 6) (Val 2)))))))))
+--Essa operação pode ser dividida em 3 passos:
+-- (eval (Add (Val (eval (Sub (Val (eval (Add (Val 6) (Val 8)))) (Val 5)))) (Val 1)))
+-- (eval (Add (Val 2) (Val (eval (Elv (Val 6) (Val 2))))))
+-- (eval (Mul (Val (eval (Add (Val (eval (Sub (Val (eval (Add (Val 6) (Val 8)))) (Val 5)))) (Val 1)))) (Val (eval (Add (Val 2) (Val (eval (Elv (Val 6) (Val 2)))))))))
 
 resultado2:: (Integral a) => a
 resultado2 = eval (Sub (Val 0) (Val (eval (Mul (Val (eval (Add (Val (eval (Sub (Val (eval (Add (Val 6) (Val 8)))) (Val 5)))) (Val 1)))) (Val (eval (Add (Val 2) (Val (eval (Elv (Val 6) (Val 2)))))))))))
