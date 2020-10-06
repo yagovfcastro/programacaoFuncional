@@ -490,8 +490,11 @@ data ArvBinEA a = Vazia |
                   NoEA (Char, ArvBinEA a, ArvBinEA a)
                     deriving (Show)
 
-ea::ArvBinEA Float
+ea::ArvBinEA Int
 ea = (NoEA ('+', NoEA ('*', Folha 10, Folha 5), Folha 7))
+
+ea1::ArvBinEA Int
+ea1 = NoEA ('+', NoEA ('/', Folha 10, Folha 5), Folha 7)
 
 evalTree:: (Integral a) => ArvBinEA a -> a
 evalTree (Vazia) = 0 
@@ -501,5 +504,5 @@ evalTree (NoEA (e1,e2,e3))
  | e1 == '-' = (evalTree e2) - (evalTree e3)
  | e1 == '*' = (evalTree e2) * (evalTree e3)
  | e1 == '^' = (evalTree e2) ^ (evalTree e3)
- | e1 == '/' = (evalTree e2) ^ (evalTree e3)
+ | e1 == '/' = (evalTree e2) `div` (evalTree e3)
  | otherwise = error "Operador Inválido!"
